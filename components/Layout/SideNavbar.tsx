@@ -8,32 +8,33 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import { Button } from "../UI/Button";
+import ToggleTheme from "./ToggleTheme";
 
 const navbarItems = [
   {
     label: "Create New",
-    icon: <IconPencilPlus strokeWidth={1} size={20} />,
+    icon: <IconPencilPlus strokeWidth={1.5} size={20} />,
   },
   {
     label: "Folder",
-    icon: <IconFolder strokeWidth={1} size={20} />,
+    icon: <IconFolder strokeWidth={1.5} size={20} />,
   },
   {
     label: "Search",
-    icon: <IconSearch strokeWidth={1} size={20} />,
+    icon: <IconSearch strokeWidth={1.5} size={20} />,
   },
   {
     label: "Bookmarks",
-    icon: <IconBookmarks strokeWidth={1} size={20} />,
+    icon: <IconBookmarks strokeWidth={1.5} size={20} />,
   },
 ];
 
 const SideNavbar = () => {
   return (
-    <div className="h-screen w-11 bg-neutral-800 px-1 py-1.5 flex flex-col items-center justify-between">
+    <div className="h-screen w-11 bg-neutral-100 dark:bg-neutral-800 px-1 py-1.5 flex flex-col items-center justify-between border-r border-neutral-200 dark:border-neutral-700">
       <div className="flex flex-col items-center">
         <Button variant="ghost" size="icon" className="mb-6">
-          <IconLayoutSidebarLeftExpand strokeWidth={1} size={20} />
+          <IconLayoutSidebarLeftExpand strokeWidth={1.5} size={20} />
         </Button>
 
         <div className="flex flex-col items-center">
@@ -53,15 +54,7 @@ const SideNavbar = () => {
       </div>
 
       <div className="flex flex-col items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Change theme"
-          className="mb-4"
-          title="Change theme"
-        >
-          <IconMoonStars strokeWidth={1} size={20} />
-        </Button>
+        <ToggleTheme />
         <Button
           variant="ghost"
           size="icon"
@@ -69,7 +62,7 @@ const SideNavbar = () => {
           title="Settings"
           className="mb-2"
         >
-          <IconSettings strokeWidth={1} size={20} />
+          <IconSettings strokeWidth={1.5} size={20} />
         </Button>
       </div>
     </div>
