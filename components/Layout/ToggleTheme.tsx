@@ -1,5 +1,4 @@
 import { useTheme } from "next-themes";
-
 import { Button } from "../UI/Button";
 import {
   DropdownMenu,
@@ -7,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/UI/Dropdown";
-import { IconMoonStars, IconSun } from "@tabler/icons-react";
+import Icon from "../UI/Icons";
 
 export function ToggleTheme() {
   const { setTheme } = useTheme();
@@ -22,11 +21,11 @@ export function ToggleTheme() {
           className="mb-4"
           title="Change theme"
         >
-          <IconSun
+          <Icon.Sun
             strokeWidth={1.5}
             className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
           />
-          <IconMoonStars
+          <Icon.MoonStar
             strokeWidth={1.5}
             className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
           />
