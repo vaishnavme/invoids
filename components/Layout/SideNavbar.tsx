@@ -1,6 +1,7 @@
 import { Button } from "../UI/Button";
 import ToggleTheme from "./ToggleTheme";
 import Icon from "../UI/Icons";
+import SettingsDialog from "../Settings/SettingDialog";
 
 const navbarItems = [
   {
@@ -58,15 +59,17 @@ const SideNavbar = (props: ISideNavProps) => {
 
       <div className="flex flex-col items-center">
         <ToggleTheme />
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Settings"
-          title="Settings"
-          className="mb-2"
-        >
-          <Icon.Settings strokeWidth={1.5} size={20} />
-        </Button>
+        <SettingsDialog>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Settings"
+            title="Settings"
+            className="mb-2"
+          >
+            <Icon.Settings strokeWidth={1.5} size={20} />
+          </Button>
+        </SettingsDialog>
       </div>
     </div>
   );
