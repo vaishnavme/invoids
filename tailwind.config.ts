@@ -19,6 +19,9 @@ const config = {
     },
     extend: {
       colors: {
+        neutral: {
+          950: "#1e1e1e",
+        },
         gunmetal: {
           300: "#353e44",
           400: "#2c3337",

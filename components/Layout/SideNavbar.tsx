@@ -30,7 +30,7 @@ const SideNavbar = (props: ISideNavProps) => {
   const { setOpenPanel } = props;
 
   return (
-    <div className="h-screen w-11 bg-neutral-100 dark:bg-neutral-900 px-1 py-1.5 flex flex-col items-center justify-between border-r border-neutral-200 dark:border-neutral-800">
+    <div className="h-screen w-11 bg-neutral-100 dark:bg-neutral-800 px-1 py-1.5 flex flex-col items-center justify-between border-r border-neutral-200 dark:border-neutral-700">
       <div className="flex flex-col items-center">
         <Button
           variant="ghost"

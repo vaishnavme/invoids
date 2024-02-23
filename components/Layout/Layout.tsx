@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import SideNavbar from "./SideNavbar";
 import { ThemeProvider } from "./ThemeProvider";
+import { Toaster } from "../UI/sonner";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ const Layout = (props: ILayoutProps) => {
         ></div>
         <main>{children}</main>
       </div>
+      <Toaster />
     </ThemeProvider>
   );
 };
