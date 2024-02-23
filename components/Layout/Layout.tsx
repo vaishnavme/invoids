@@ -16,7 +16,7 @@ const Layout = (props: ILayoutProps) => {
       enableSystem
       disableTransitionOnChange
     >
-      <div className="flex flex-row">
+      <div className="flex flex-row bg-white text-black dark:bg-neutral-950 dark:text-white">
         <SideNavbar />
         <main>{children}</main>
       </div>
