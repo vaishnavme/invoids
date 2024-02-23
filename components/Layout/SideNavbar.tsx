@@ -21,11 +21,22 @@ const navbarItems = [
   },
 ];
 
-const SideNavbar = () => {
+interface ISideNavProps {
+  setOpenPanel: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SideNavbar = (props: ISideNavProps) => {
+  const { setOpenPanel } = props;
+
   return (
     <div className="h-screen w-11 bg-neutral-100 dark:bg-neutral-900 px-1 py-1.5 flex flex-col items-center justify-between border-r border-neutral-200 dark:border-neutral-800">
       <div className="flex flex-col items-center">
-        <Button variant="ghost" size="icon" className="mb-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setOpenPanel((prevState) => !prevState)}
+          className="mb-6"
+        >
           <Icon.LeftSidebar strokeWidth={1.5} size={20} />
         </Button>
 
