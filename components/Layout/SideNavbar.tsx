@@ -1,6 +1,7 @@
 import { Button } from "../UI/Button";
 import ToggleTheme from "./ToggleTheme";
 import Icon from "../UI/Icons";
+import SettingsDialog from "../Settings/SettingDialog";
 
 const navbarItems = [
   {
@@ -21,11 +22,22 @@ const navbarItems = [
   },
 ];
 
-const SideNavbar = () => {
+interface ISideNavProps {
+  setOpenPanel: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SideNavbar = (props: ISideNavProps) => {
+  const { setOpenPanel } = props;
+
   return (
     <div className="h-screen w-11 bg-neutral-100 dark:bg-neutral-800 px-1 py-1.5 flex flex-col items-center justify-between border-r border-neutral-200 dark:border-neutral-700">
       <div className="flex flex-col items-center">
-        <Button variant="ghost" size="icon" className="mb-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setOpenPanel((prevState) => !prevState)}
+          className="mb-6"
+        >
           <Icon.LeftSidebar strokeWidth={1.5} size={20} />
         </Button>
 
@@ -47,15 +59,17 @@ const SideNavbar = () => {
 
       <div className="flex flex-col items-center">
         <ToggleTheme />
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Settings"
-          title="Settings"
-          className="mb-2"
-        >
-          <Icon.Settings strokeWidth={1.5} size={20} />
-        </Button>
+        <SettingsDialog>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Settings"
+            title="Settings"
+            className="mb-2"
+          >
+            <Icon.Settings strokeWidth={1.5} size={20} />
+          </Button>
+        </SettingsDialog>
       </div>
     </div>
   );

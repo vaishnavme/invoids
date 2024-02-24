@@ -17,7 +17,19 @@ const config = {
         "2xl": "1400px",
       },
     },
-    extend: {},
+    extend: {
+      colors: {
+        neutral: {
+          950: "#1e1e1e",
+        },
+        gunmetal: {
+          300: "#353e44",
+          400: "#2c3337",
+          700: "#1d2327",
+          800: "#171c1f",
+        },
+      },
+    },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
