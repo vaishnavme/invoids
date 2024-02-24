@@ -59,7 +59,7 @@ const SideNavbar = (props: ISideNavProps) => {
 
       <div className="flex flex-col items-center">
         <ToggleTheme />
-        <SettingsDialog>
+        {/* <SettingsDialog>
           <Button
             variant="ghost"
             size="icon"
@@ -69,7 +69,7 @@ const SideNavbar = (props: ISideNavProps) => {
           >
             <Icon.Settings strokeWidth={1.5} size={20} />
           </Button>
-        </SettingsDialog>
+        </SettingsDialog> */}
       </div>
     </div>
   );
