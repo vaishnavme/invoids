@@ -6,10 +6,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../UI/dialog";
+} from "../UI/Dialog";
 import General from "./General";
 import Files from "./Files";
 import Editor from "./Editor";
+import dynamic from "next/dynamic";
 
 interface ISettingProps {
   children: ReactNode;
@@ -73,4 +74,6 @@ const SettingsDialog = (props: ISettingProps) => {
   );
 };
 
-export default SettingsDialog;
+export default dynamic(() => Promise.resolve(SettingsDialog), {
+  ssr: false,
+});

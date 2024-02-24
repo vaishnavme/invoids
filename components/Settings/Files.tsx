@@ -67,7 +67,12 @@ const Files = () => {
         </div>
       </div>
 
-      <Button size="sm" variant="default" className=" self-end">
+      <Button
+        size="sm"
+        variant="default"
+        className="self-end"
+        onClick={saveSettings}
+      >
         Save
       </Button>
     </div>
