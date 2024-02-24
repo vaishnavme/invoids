@@ -2,7 +2,7 @@ import { dialog, fs } from "@tauri-apps/api";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../UI/Button";
-import { Input } from "../UI/input";
+import { Input } from "../UI/Input";
 
 const Files = () => {
   const [folderName, setFolderName] = useState<string | null>(null);
