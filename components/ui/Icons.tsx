@@ -1,12 +1,26 @@
 import {
+  IconBlockquote,
   IconBookmarks,
+  IconCheck,
+  IconChevronRight,
+  IconCode,
   IconFolder,
+  IconH1,
+  IconH2,
+  IconH3,
   IconLayoutSidebarLeftExpand,
+  IconList,
+  IconListCheck,
+  IconListNumbers,
   IconMoonStars,
   IconPencilPlus,
+  IconPointFilled,
   IconSearch,
+  IconSeparator,
   IconSettings,
   IconSun,
+  IconTypography,
+  IconX,
 } from "@tabler/icons-react";
 
 const Icon = {
@@ -18,6 +32,20 @@ const Icon = {
   Settings: IconSettings,
   Sun: IconSun,
   MoonStar: IconMoonStars,
+  Check: IconCheck,
+  ChevronRight: IconChevronRight,
+  DotFilled: IconPointFilled,
+  Cross: IconX,
+  Heading1: IconH1,
+  Heading2: IconH2,
+  Heading3: IconH3,
+  Typography: IconTypography,
+  BulletList: IconList,
+  NumberList: IconListNumbers,
+  Blockquote: IconBlockquote,
+  Codeblock: IconCode,
+  CheckList: IconListCheck,
+  Separator: IconSeparator,
 };
 
 export default Icon;

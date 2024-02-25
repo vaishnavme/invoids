@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import SideNavbar from "./SideNavbar";
 import { ThemeProvider } from "./ThemeProvider";
-import { Toaster } from "../UI/sonner";
+import { Toaster } from "../UI/Sonner";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -10,8 +10,6 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   const { children } = props;
 
-  const [openPanel, setOpenPanel] = useState<boolean>(false);
-
   return (
     <ThemeProvider
       attribute="class"
@@ -19,14 +17,14 @@ const Layout = (props: ILayoutProps) => {
       enableSystem
       disableTransitionOnChange
     >
-      <div className="flex flex-row bg-white text-black dark:bg-neutral-950 dark:text-white">
-        <SideNavbar setOpenPanel={setOpenPanel} />
-        <div
-          className={`h-screen bg-neutral-100 dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 transition-all ${
-            openPanel ? "w-64" : "w-0 border-transparent"
-          }`}
-        ></div>
-        <main>{children}</main>
+      <div className="flex flex-row relative">
+        <div className=" fixed left-0 top-0">
+          <SideNavbar />
+        </div>
+        <main className="w-full">
+          <div className="h-8 border-b border-neutral-200 dark:border-neutral-700" />
+          {children}
+        </main>
       </div>
       <Toaster />
     </ThemeProvider>
