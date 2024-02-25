@@ -1,15 +1,9 @@
 import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
+import editorExtensions from "./Extension";
 
 const Editor = () => {
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder: "Sketch, Write, Organize",
-      }),
-    ],
+    extensions: editorExtensions,
     editorProps: {
       attributes: {
         class: "focus:outline-none",

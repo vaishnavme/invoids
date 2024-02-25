@@ -17,6 +17,8 @@
     "@tabler/icons-react": "^2.47.0",
     "@tauri-apps/api": "^1.5.3",
     "@tiptap/extension-placeholder": "^2.2.4",
+    "@tiptap/extension-task-item": "^2.2.4",
+    "@tiptap/extension-task-list": "^2.2.4",
     "@tiptap/pm": "^2.2.4",
     "@tiptap/react": "^2.2.4",
     "@tiptap/starter-kit": "^2.2.4",
