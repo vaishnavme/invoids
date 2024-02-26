@@ -6,7 +6,7 @@ const Editor = () => {
     extensions: editorExtensions,
     editorProps: {
       attributes: {
-        class: "focus:outline-none",
+        class: "prose focus:outline-none",
       },
     },
   });

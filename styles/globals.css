@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tiptap placeholder */
 .tiptap p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
@@ -9,4 +10,48 @@
   height: 0;
   pointer-events: none;
   font-weight: 300;
+}
+
+/* Tiptap editor live preview styles */
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.prose h1 {
+  @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+}
+.prose h2 {
+  @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+}
+.prose h3 {
+  @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+}
+.prose strong {
+  font-weight: 600;
+}
+.prose p {
+  @apply leading-7 [&:not(:first-child)]:mt-6;
+}
+.prose blockquote {
+  @apply mt-6 border-l-[3px] border-yellow-300 pl-6;
+}
+.prose ul,
+.prose ol {
+  @apply my-6 ml-6 list-disc [&>li]:mt-2;
+}
+.prose ul {
+  @apply list-disc;
+}
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose ul[data-type="taskList"] li {
+  @apply flex items-center flex-wrap gap-x-2;
+}
+
+.prose code:not(pre code) {
+  @apply font-mono text-pink-500 dark:text-pink-400 tracking-tight text-sm;
 }

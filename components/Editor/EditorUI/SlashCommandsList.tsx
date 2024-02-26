@@ -126,7 +126,7 @@ const suggestedCommands = [
     description: "Visually divide blocks.",
     icon: <Icon.Separator />,
     command: ({ editor, range }: CommandTypes) => {
-      editor.chain().focus().setCodeBlock().run();
+      editor.chain().focus().deleteRange(range).setHorizontalRule().run();
     },
   },
 ];
@@ -194,7 +194,7 @@ const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
   }, [query, filterCommands]);
 
   return (
-    <div className="dark:bg-neutral-800  dark:border-neutral-600 border w-64 max-h-80 overflow-y-auto rounded-lg p-1 shadow-lg">
+    <div className="dark:bg-neutral-800 bg-white  dark:border-neutral-600 border w-64 max-h-80 overflow-y-auto rounded-lg p-1 shadow-lg">
       <>
         {allCommands?.length > 0 ? (
           <div>
