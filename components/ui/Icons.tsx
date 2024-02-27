@@ -22,6 +22,10 @@ import {
   IconX,
   IconLayoutSidebarLeftCollapse,
   IconLayoutSidebarLeftExpand,
+  IconBold,
+  IconItalic,
+  IconStrikethrough,
+  IconUnderline,
 } from "@tabler/icons-react";
 
 const Icon = {
@@ -48,6 +52,10 @@ const Icon = {
   Codeblock: IconCode,
   CheckList: IconListCheck,
   Separator: IconSeparator,
+  Bold: IconBold,
+  Italic: IconItalic,
+  StrikeThrough: IconStrikethrough,
+  Underline: IconUnderline,
 };
 
 export default Icon;
