@@ -8,7 +8,6 @@ import {
   IconH1,
   IconH2,
   IconH3,
-  IconLayoutSidebarLeftExpand,
   IconList,
   IconListCheck,
   IconListNumbers,
@@ -21,6 +20,12 @@ import {
   IconSun,
   IconTypography,
   IconX,
+  IconLayoutSidebarLeftCollapse,
+  IconLayoutSidebarLeftExpand,
+  IconBold,
+  IconItalic,
+  IconStrikethrough,
+  IconUnderline,
 } from "@tabler/icons-react";
 
 const Icon = {
@@ -28,7 +33,8 @@ const Icon = {
   Folder: IconFolder,
   Search: IconSearch,
   Bookmarks: IconBookmarks,
-  LeftSidebar: IconLayoutSidebarLeftExpand,
+  LeftSidebarCollpase: IconLayoutSidebarLeftCollapse,
+  LeftSidebarExpand: IconLayoutSidebarLeftExpand,
   Settings: IconSettings,
   Sun: IconSun,
   MoonStar: IconMoonStars,
@@ -46,6 +52,10 @@ const Icon = {
   Codeblock: IconCode,
   CheckList: IconListCheck,
   Separator: IconSeparator,
+  Bold: IconBold,
+  Italic: IconItalic,
+  StrikeThrough: IconStrikethrough,
+  Underline: IconUnderline,
 };
 
 export default Icon;

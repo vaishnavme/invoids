@@ -1,5 +1,6 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import editorExtensions from "./Extension";
+import EditorHoverMenu from "./Extension/EditorHoverMenu";
 
 const Editor = () => {
   const editor = useEditor({
@@ -11,7 +12,12 @@ const Editor = () => {
     },
   });
 
-  return <EditorContent editor={editor} />;
+  return (
+    <>
+      <EditorHoverMenu editor={editor} />
+      <EditorContent editor={editor} />
+    </>
+  );
 };
 
 export default Editor;

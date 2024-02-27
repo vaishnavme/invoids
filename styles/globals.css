@@ -20,13 +20,13 @@
   margin-bottom: 16px;
 }
 .prose h1 {
-  @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+  @apply scroll-m-20 text-4xl font-extrabold lg:text-5xl;
 }
 .prose h2 {
-  @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+  @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold transition-colors first:mt-0;
 }
 .prose h3 {
-  @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+  @apply mt-8 scroll-m-20 text-2xl font-semibold;
 }
 .prose strong {
   font-weight: 600;
@@ -35,7 +35,7 @@
   @apply leading-7 [&:not(:first-child)]:mt-6;
 }
 .prose blockquote {
-  @apply mt-6 border-l-[3px] border-yellow-300 pl-6;
+  @apply mt-3 border-l-[3px] border-yellow-300 pl-6 bg-neutral-100 dark:bg-neutral-800 py-2 rounded-r-lg rounded-l;
 }
 .prose ul,
 .prose ol {
@@ -47,7 +47,9 @@
 .prose ol {
   @apply list-decimal;
 }
-
+.prose hr {
+  @apply my-6;
+}
 .prose ul[data-type="taskList"] li {
   @apply flex items-center flex-wrap gap-x-2;
 }

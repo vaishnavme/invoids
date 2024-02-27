@@ -10,14 +10,10 @@ const config = {
   ],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
+      fontFamily: {
+        body: ["var(--font-inter)"],
+      },
       colors: {
         neutral: {
           950: "#1e1e1e",

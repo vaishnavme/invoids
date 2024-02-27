@@ -17,7 +17,9 @@ const Home = () => {
         onChange={(e) => setDocTitle(e.target.value)}
         className="text-3xl font-semibold w-full mb-6 outline-none resize-none"
       />
-      <Editor />
+      <div className="mb-20">
+        <Editor />
+      </div>
     </div>
   );
 };
