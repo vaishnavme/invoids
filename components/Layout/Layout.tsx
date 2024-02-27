@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import SideNavbar from "./SideNavbar";
 import { ThemeProvider } from "./ThemeProvider";
 import { Toaster } from "../UI/Sonner";
+import { inter } from "@/pages/_app";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -17,7 +18,7 @@ const Layout = (props: ILayoutProps) => {
       enableSystem
       disableTransitionOnChange
     >
-      <div className="flex flex-row relative">
+      <div className={`${inter.variable} flex flex-row relative`}>
         <div className=" fixed left-0 top-0">
           <SideNavbar />
         </div>
