@@ -22,12 +22,28 @@ const navbarItems = [
   },
 ];
 
-const SideNavbar = () => {
+interface ISideNavbarProps {
+  isSidePanelOpen: boolean;
+  setIsSidePanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SideNavbar = (props: ISideNavbarProps) => {
+  const { isSidePanelOpen, setIsSidePanelOpen } = props;
+
   return (
     <div className="h-screen w-11 bg-neutral-100 dark:bg-neutral-800 px-1 py-1.5 flex flex-col items-center justify-between border-r border-neutral-200 dark:border-neutral-700">
       <div className="flex flex-col items-center">
-        <Button variant="ghost" size="icon" className="mb-6">
-          <Icon.LeftSidebar strokeWidth={1.5} size={20} />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="mb-6"
+          onClick={() => setIsSidePanelOpen((prevState) => !prevState)}
+        >
+          {isSidePanelOpen ? (
+            <Icon.LeftSidebarCollpase strokeWidth={1.5} size={20} />
+          ) : (
+            <Icon.LeftSidebarExpand strokeWidth={1.5} size={20} />
+          )}
         </Button>
 
         <div className="flex flex-col items-center">
