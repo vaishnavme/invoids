@@ -1,4 +1,3 @@
-import { dialog, fs } from "@tauri-apps/api";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../UI/Button";
@@ -9,6 +8,7 @@ const Files = () => {
   const [folderPath, setFolderPath] = useState<string | null>(null);
 
   const selectFolderPath = async () => {
+    const dialog = await import("@tauri-apps/api/dialog");
     try {
       const result = await dialog.open({
         directory: true,
@@ -23,6 +23,7 @@ const Files = () => {
   };
 
   const saveSettings = async () => {
+    const fs = await import("@tauri-apps/api/fs");
     try {
       const vaultPath = `${folderPath}/${folderName}`;
       await fs.createDir(vaultPath);

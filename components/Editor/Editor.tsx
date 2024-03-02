@@ -2,9 +2,19 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import editorExtensions from "./Extension";
 import EditorHoverMenu from "./Extension/EditorHoverMenu";
 
-const Editor = () => {
+type IEditorProps = {
+  onUpdate: (data: any) => void;
+};
+
+const Editor = (props: IEditorProps) => {
+  const { onUpdate } = props;
+
   const editor = useEditor({
     extensions: editorExtensions,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      onUpdate(html);
+    },
     editorProps: {
       attributes: {
         class: "prose focus:outline-none",

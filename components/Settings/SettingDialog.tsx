@@ -10,7 +10,6 @@ import {
 import General from "./General";
 import Files from "./Files";
 import Editor from "./Editor";
-import dynamic from "next/dynamic";
 
 interface ISettingProps {
   children: ReactNode;
@@ -74,6 +73,4 @@ const SettingsDialog = (props: ISettingProps) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(SettingsDialog), {
-  ssr: false,
-});
+export default SettingsDialog;
