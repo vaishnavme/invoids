@@ -1,7 +1,6 @@
 import Editor from "@/components/Editor/Editor";
 import { Textarea } from "@/components/UI/Textarea";
-import useAutosizeTextArea from "@/hooks/useAutosizeTextarea";
-import { debounce } from "@/lib/utils";
+import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 import { useRef, useState } from "react";
 
 const Home = () => {

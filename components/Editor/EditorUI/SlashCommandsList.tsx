@@ -200,6 +200,7 @@ const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
           <div>
             {allCommands.map((option, index) => {
               if (selectedIndex === index) {
+                // @ts-ignore
                 commandsRef.current[selectedIndex]?.scrollIntoView({
                   block: "nearest",
                 });
@@ -210,6 +211,7 @@ const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
                   key={option.title}
                   type="button"
                   ref={(element) => {
+                    // @ts-ignore
                     commandsRef.current[index] = element;
                   }}
                   onClick={() => option.command({ editor, range })}
