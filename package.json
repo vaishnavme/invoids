@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "format:fix": "prettier --write",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
@@ -27,6 +31,7 @@
     "@tiptap/suggestion": "^2.2.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "husky": "^9.0.11",
     "next": "14.1.0",
     "next-themes": "^0.2.1",
     "react": "^18",
