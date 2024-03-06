@@ -1,8 +1,8 @@
 import { ReactNode, useState } from "react";
 import SideNavbar from "./SideNavbar";
 import { ThemeProvider } from "./ThemeProvider";
-import { Toaster } from "../UI/Sonner";
 import { inter } from "@/pages/_app";
+import { Toaster } from "sonner";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -40,7 +40,7 @@ const Layout = (props: ILayoutProps) => {
           </main>
         </div>
       </div>
-      <Toaster />
+      <Toaster richColors />
     </ThemeProvider>
   );
 };

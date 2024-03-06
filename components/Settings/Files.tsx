@@ -18,7 +18,7 @@ const Files = () => {
 
       setFolderPath(result as string | null);
     } catch (err: any) {
-      toast(err?.message || "Something went wrong!");
+      toast.error(err?.message || "Something went wrong!");
     }
   };
 
@@ -28,7 +28,7 @@ const Files = () => {
       const vaultPath = `${folderPath}/${folderName}`;
       await fs.createDir(vaultPath);
     } catch (err: any) {
-      toast(err?.message || "Something went wrong!");
+      toast.error(err?.message || "Something went wrong!");
     }
   };
 
