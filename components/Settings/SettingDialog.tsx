@@ -10,6 +10,7 @@ import {
 import General from "./General";
 import Files from "./Files";
 import Editor from "./Editor";
+import useStore from "@/store/store";
 
 interface ISettingProps {
   children: ReactNode;
@@ -23,6 +24,8 @@ const settingsOption = [general, files, editor];
 
 const SettingsDialog = (props: ISettingProps) => {
   const { children } = props;
+
+  const { openSettings, toggleSettingsDialog } = useStore((state) => state);
 
   const [selectedOption, setSelectedOption] = useState<string>(general);
 
@@ -43,7 +46,10 @@ const SettingsDialog = (props: ISettingProps) => {
   };
 
   return (
-    <Dialog>
+    <Dialog
+      open={openSettings}
+      onOpenChange={(value) => toggleSettingsDialog(value)}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-3xl">
         <DialogHeader>

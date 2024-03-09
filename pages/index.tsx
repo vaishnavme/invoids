@@ -23,7 +23,7 @@ const Home = () => {
         placeholder="Untitled"
         maxLength={180}
         onChange={(e) => setDocTitle(e.target.value)}
-        className="text-3xl font-semibold w-full mb-4 h-0 outline-none border-none dark:border-none resize-none focus-visible:ring-transparent dark:focus-visible:ring-transparent"
+        className="text-3xl font-semibold w-full mb-4 h-0 outline-none border-none dark:border-none resize-none focus-visible:ring-transparent dark:focus-visible:ring-transparent shadow-none"
       />
       <div className="mb-64 px-4">
         <Editor onUpdate={setDocsBody} />

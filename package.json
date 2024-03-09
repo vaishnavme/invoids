@@ -46,7 +46,8 @@
     "sonner": "^1.4.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.10",

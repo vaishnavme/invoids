@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
+import { BaseDirectory } from "@tauri-apps/api/fs";
+import useStore from "@/store/store";
+
+type FilesConfig = {
+  folder: string;
+  path: string;
+};
 
 const Files = () => {
-  const [folderName, setFolderName] = useState<string | null>(null);
-  const [folderPath, setFolderPath] = useState<string | null>(null);
+  const { settingsConfig, updateSettingConfig } = useStore((state) => state);
+
+  const [filesConfig, setFilesConfig] = useState<FilesConfig>({
+    folder: "",
+    path: "",
+  });
 
   const selectFolderPath = async () => {
     const dialog = await import("@tauri-apps/api/dialog");
+
     try {
       const result = await dialog.open({
         directory: true,
         multiple: false,
         defaultPath: ".",
+        title: "Select Vault to Store Invoids files.",
       });
 
-      setFolderPath(result as string | null);
+      setFilesConfig((prevState) => ({
+        ...prevState,
+        path: result as string,
+      }));
     } catch (err: any) {
       toast.error(err?.message || "Something went wrong!");
     }
@@ -24,13 +40,35 @@ const Files = () => {
 
   const saveSettings = async () => {
     const fs = await import("@tauri-apps/api/fs");
+    const { folder, path } = filesConfig;
+    if (!path || folder) return;
     try {
-      const vaultPath = `${folderPath}/${folderName}`;
+      const vaultPath = `${path}/${folder}`;
+
       await fs.createDir(vaultPath);
+
+      await fs.createDir("", { dir: BaseDirectory.App, recursive: true });
+      await fs.writeTextFile(
+        "app.json",
+        JSON.stringify({ path: vaultPath, folder: folder }),
+        {
+          dir: BaseDirectory.App,
+        },
+      );
+      const payload = {
+        path: vaultPath,
+        folder,
+      };
+      updateSettingConfig(payload);
     } catch (err: any) {
+      console.log(err);
       toast.error(err?.message || "Something went wrong!");
     }
   };
+
+  useEffect(() => {
+    setFilesConfig(settingsConfig);
+  }, [settingsConfig]);
 
   return (
     <div className="flex flex-col justify-between h-full">
@@ -44,7 +82,13 @@ const Files = () => {
               id="folder-name"
               className="bg-white dark:bg-zinc-800"
               placeholder="Folder name"
-              onChange={(e) => setFolderName(e.target.value)}
+              value={filesConfig.folder}
+              onChange={(e) =>
+                setFilesConfig((prevState) => ({
+                  ...prevState,
+                  folder: e.target.value,
+                }))
+              }
             />
           </div>
         </div>
@@ -57,7 +101,7 @@ const Files = () => {
             </p>
 
             <p className="text-xs text-gray-600 mt-2">
-              {folderPath || "No folder selected"}
+              {filesConfig.folder || "No folder selected"}
             </p>
           </div>
           <div>
