@@ -1,8 +1,9 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import SideNavbar from "./SideNavbar";
 import { ThemeProvider } from "./ThemeProvider";
 import { inter } from "@/pages/_app";
 import { Toaster } from "sonner";
+import useStore from "@/store/store";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -11,7 +12,13 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   const { children } = props;
 
+  const init = useStore((state) => state.init);
+
   const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <ThemeProvider
