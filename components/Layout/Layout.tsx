@@ -79,7 +79,7 @@ const Layout = (props: ILayoutProps) => {
           <div className="h-8 border-b border-neutral-200 dark:border-neutral-700" />
           <main className="w-full flex flex-row h-[calc(100vh-32px)]">
             <div
-              className={`bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700 border-neutral-200 shrink-0 transition-all ease-in-out flex flex-col items-center ${
+              className={`bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700 border-neutral-200 shrink-0 transition-all ease-in-out flex flex-col items-center duration-300 ${
                 isSidePanelOpen
                   ? "border-r translate-x-0 w-64"
                   : "w-0 border-transparent -translate-x-64 z-0"
