@@ -1,13 +1,15 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import editorExtensions from "./Extension";
 import EditorHoverMenu from "./Extension/EditorHoverMenu";
+import { useEffect } from "react";
 
 type IEditorProps = {
+  content: string;
   onUpdate: (data: any) => void;
 };
 
 const Editor = (props: IEditorProps) => {
-  const { onUpdate } = props;
+  const { onUpdate, content } = props;
 
   const editor = useEditor({
     extensions: editorExtensions,
@@ -21,6 +23,12 @@ const Editor = (props: IEditorProps) => {
       },
     },
   });
+
+  useEffect(() => {
+    if (editor && editor.isEmpty && content !== "") {
+      editor.commands.insertContent(content);
+    }
+  }, [editor, content]);
 
   return (
     <>
