@@ -10,7 +10,8 @@ import {
 import General from "./General";
 import Files from "./Files";
 import Editor from "./Editor";
-import useStore from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { appActions } from "@/redux/appSlice";
 
 interface ISettingProps {
   children: ReactNode;
@@ -25,7 +26,8 @@ const settingsOption = [general, files, editor];
 const SettingsDialog = (props: ISettingProps) => {
   const { children } = props;
 
-  const { openSettings, toggleSettingsDialog } = useStore((state) => state);
+  const dispatch = useDispatch();
+  const { showSettingDialog } = useSelector((state) => state.AppData);
 
   const [selectedOption, setSelectedOption] = useState<string>(general);
 
@@ -47,8 +49,8 @@ const SettingsDialog = (props: ISettingProps) => {
 
   return (
     <Dialog
-      open={openSettings}
-      onOpenChange={(value) => toggleSettingsDialog(value)}
+      open={showSettingDialog}
+      onOpenChange={(value) => dispatch(appActions.toggleSettingsDialog(value))}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-3xl">
@@ -57,7 +59,7 @@ const SettingsDialog = (props: ISettingProps) => {
         </DialogHeader>
 
         <div className="flex flex-row gap-x-4 h-96">
-          <div className="flex flex-col gap-y-1 w-52">
+          <div className="flex flex-col gap-y-1 w-72 border-r dark:border-r-zinc-800 pr-4">
             {settingsOption.map((option) => (
               <Button
                 key={option}
@@ -70,7 +72,7 @@ const SettingsDialog = (props: ISettingProps) => {
               </Button>
             ))}
           </div>
-          <div className="bg-neutral-100 dark:bg-neutral-900 w-full rounded-xl p-4">
+          <div className="w-full rounded-xl p-4">
             {renderSettingComponent(selectedOption)}
           </div>
         </div>

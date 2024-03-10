@@ -25,6 +25,7 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toggle": "^1.0.3",
+    "@reduxjs/toolkit": "^2.2.1",
     "@tabler/icons-react": "^2.47.0",
     "@tauri-apps/api": "^1.5.3",
     "@tiptap/extension-placeholder": "^2.2.4",
@@ -43,11 +44,11 @@
     "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-redux": "^9.1.0",
     "sonner": "^1.4.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "tippy.js": "^6.3.7",
-    "zustand": "^4.5.2"
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.10",

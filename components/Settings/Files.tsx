@@ -3,7 +3,8 @@ import { toast } from "sonner";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
 import { BaseDirectory } from "@tauri-apps/api/fs";
-import useStore from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { appActions } from "@/redux/appSlice";
 
 type FilesConfig = {
   folder: string;
@@ -11,7 +12,9 @@ type FilesConfig = {
 };
 
 const Files = () => {
-  const { settingsConfig, updateSettingConfig } = useStore((state) => state);
+  const dispatch = useDispatch();
+
+  const { appConfig } = useSelector((state) => state.AppData);
 
   const [filesConfig, setFilesConfig] = useState<FilesConfig>({
     folder: "",
@@ -40,8 +43,11 @@ const Files = () => {
 
   const saveSettings = async () => {
     const fs = await import("@tauri-apps/api/fs");
+
     const { folder, path } = filesConfig;
+
     if (!path || folder) return;
+
     try {
       const vaultPath = `${path}/${folder}`;
 
@@ -59,7 +65,7 @@ const Files = () => {
         path: vaultPath,
         folder,
       };
-      updateSettingConfig(payload);
+      dispatch(appActions.updateAppConfig(payload));
     } catch (err: any) {
       console.log(err);
       toast.error(err?.message || "Something went wrong!");
@@ -67,8 +73,8 @@ const Files = () => {
   };
 
   useEffect(() => {
-    setFilesConfig(settingsConfig);
-  }, [settingsConfig]);
+    setFilesConfig(appConfig);
+  }, [appConfig]);
 
   return (
     <div className="flex flex-col justify-between h-full">
@@ -99,10 +105,6 @@ const Files = () => {
             <p className="text-xs text-gray-500">
               Where notes, bookmarks are stored.
             </p>
-
-            <p className="text-xs text-gray-600 mt-2">
-              {filesConfig.folder || "No folder selected"}
-            </p>
           </div>
           <div>
             <Button size="sm" variant="outline" onClick={selectFolderPath}>
@@ -110,6 +112,10 @@ const Files = () => {
             </Button>
           </div>
         </div>
+
+        <p className="text-xs" title="Current Vault Path">
+          {filesConfig?.path || "No folder selected"}
+        </p>
       </div>
 
       <Button

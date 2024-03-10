@@ -3,7 +3,9 @@ import SideNavbar from "./SideNavbar";
 import { ThemeProvider } from "./ThemeProvider";
 import { inter } from "@/pages/_app";
 import { Toaster } from "sonner";
-import useStore from "@/store/store";
+import { BaseDirectory } from "@tauri-apps/api/fs";
+import { useDispatch, useSelector } from "react-redux";
+import { appActions } from "@/redux/appSlice";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -12,13 +14,33 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   const { children } = props;
 
-  const init = useStore((state) => state.init);
+  const dispatch = useDispatch();
+
+  const { appConfig } = useSelector((state) => state.AppData);
 
   const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(false);
 
+  const initalizeApp = async () => {
+    const fs = await import("@tauri-apps/api/fs");
+
+    try {
+      const result = await fs.readTextFile("app.json", {
+        dir: BaseDirectory.App,
+      });
+
+      const settingsConfig = JSON.parse(result);
+
+      dispatch(appActions.init(settingsConfig));
+    } catch {
+      dispatch(appActions.toggleSettingsDialog(true));
+    }
+  };
+
   useEffect(() => {
-    init();
-  }, []);
+    if (appConfig === null) {
+      initalizeApp();
+    }
+  }, [appConfig]);
 
   return (
     <ThemeProvider
