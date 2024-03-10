@@ -1,8 +1,10 @@
-import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
 import { Inter } from "next/font/google";
+import { Provider } from "react-redux";
+import store from "../redux/store";
+import "@/styles/globals.css";
 import Layout from "@/components/Layout/Layout";
 
 export const inter = Inter({
@@ -21,5 +23,7 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
+  );
 }
