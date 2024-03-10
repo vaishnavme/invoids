@@ -1,3 +1,64 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@next/next/recommended",
+    "prettier"
+  ],
+  "plugins": ["react"],
+  "rules": {
+    "no-tabs": "off",
+    "indent": "off",
+    "prefer-const": "warn",
+    "arrow-body-style": "warn",
+    "no-throw-literal": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "consistent-return": "off",
+    "@next/next/no-img-element": "off",
+    "no-return-await": "off",
+    "no-await-in-loop": "off",
+    "no-use-before-define": ["error", { "variables": false }],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "import/no-cycle": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "prefer-destructuring": "warn",
+    "object-curly-spacing": ["warn", "always"],
+    "key-spacing": ["warn", { "beforeColon": false }],
+    "semi": "warn",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  }
 }
