@@ -68,7 +68,7 @@ const Layout = (props: ILayoutProps) => {
       disableTransitionOnChange
     >
       <div className={`${inter.variable} flex flex-row relative`}>
-        <div className="fixed left-0 top-0">
+        <div className="fixed left-0 top-0 z-30">
           <SideNavbar
             isSidePanelOpen={isSidePanelOpen}
             setIsSidePanelOpen={setIsSidePanelOpen}
@@ -80,7 +80,9 @@ const Layout = (props: ILayoutProps) => {
           <main className="w-full flex flex-row h-[calc(100vh-32px)]">
             <div
               className={`bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700 border-neutral-200 shrink-0 transition-all ease-in-out flex flex-col items-center ${
-                isSidePanelOpen ? "w-64 border-r" : "w-0 border-transparent"
+                isSidePanelOpen
+                  ? "border-r translate-x-0 w-64"
+                  : "w-0 border-transparent -translate-x-64 z-0"
               }`}
             >
               {allNotes.map((note) => (
