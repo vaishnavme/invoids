@@ -1,14 +1,14 @@
 import { useTheme } from "next-themes";
-import { Button } from "../UI/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/UI/Dropdown";
+import { Button } from "../UI/Button";
 import Icon from "../UI/Icons";
 
-export function ToggleTheme() {
+const ToggleTheme = () => {
   const { setTheme } = useTheme();
 
   return (
@@ -48,5 +48,6 @@ export function ToggleTheme() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
 export default ToggleTheme;

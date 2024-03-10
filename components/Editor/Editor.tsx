@@ -1,20 +1,27 @@
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  ForwardedRef,
+} from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import editorExtensions from "./Extension";
 import EditorHoverMenu from "./Extension/EditorHoverMenu";
-import { useEffect } from "react";
 
 type IEditorProps = {
   content: string;
-  onUpdate: (data: any) => void;
+  // eslint-disable-next-line no-unused-vars
+  onUpdate: (data: string) => void;
 };
 
-const Editor = (props: IEditorProps) => {
+const Editor = forwardRef((props: IEditorProps, ref: ForwardedRef<any>) => {
   const { onUpdate, content } = props;
 
   const editor = useEditor({
     extensions: editorExtensions,
-    onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
+    content,
+    onUpdate: ({ editor: editorInstance }) => {
+      const html = editorInstance.getHTML();
       onUpdate(html);
     },
     editorProps: {
@@ -23,6 +30,18 @@ const Editor = (props: IEditorProps) => {
       },
     },
   });
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      clearContent: () => {
+        if (editor) {
+          editor.commands.clearContent();
+        }
+      },
+    }),
+    [editor],
+  );
 
   useEffect(() => {
     if (editor && editor.isEmpty && content !== "") {
@@ -36,6 +55,6 @@ const Editor = (props: IEditorProps) => {
       <EditorContent editor={editor} />
     </>
   );
-};
+});
 
 export default Editor;
