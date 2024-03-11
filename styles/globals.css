@@ -32,7 +32,7 @@
   font-weight: 600;
 }
 .prose p {
-  @apply leading-7 [&:not(:first-child)]:mt-6;
+  @apply leading-7 [&:not(:first-child)]:mb-6;
 }
 .prose blockquote {
   @apply mt-3 border-l-[3px] border-yellow-300 pl-6 bg-neutral-100 dark:bg-neutral-800 py-2 rounded-r-lg rounded-l;
@@ -56,4 +56,82 @@
 
 .prose code:not(pre code) {
   @apply font-mono text-pink-500 dark:text-pink-400 tracking-tight text-sm;
+}
+
+.hljs {
+  font-size: 13px;
+  @apply bg-zinc-900 rounded-xl dark:bg-[#0E0E10] text-zinc-300 overflow-x-auto p-4 border border-zinc-300/20 mb-6;
+}
+
+.hljs-comment,
+.hljs-prolog,
+.hljs-doctype,
+.hljs-cdata {
+  color: #6272a4;
+}
+
+.hljs-punctuation {
+  color: #f8f8f2;
+}
+
+.hljs-namespace {
+  opacity: 0.7;
+}
+
+.hljs-property,
+.hljs-tag,
+.hljs-constant,
+.hljs-symbol,
+.hljs-deleted {
+  color: #ff79c6;
+}
+
+.hljs-boolean,
+.hljs-number {
+  color: #bd93f9;
+}
+
+.hljs-selector,
+.hljs-attr-name,
+.hljs-string,
+.hljs-char,
+.hljs-builtin,
+.hljs-inserted {
+  color: #50fa7b;
+}
+
+.hljs-operator,
+.hljs-entity,
+.hljs-url,
+.hljs-variable {
+  color: #f8f8f2;
+}
+
+.hljs-atrule,
+.hljs-attr,
+.hljs-function,
+.hljs-class-name {
+  color: #f1fa8c;
+}
+
+.hljs-keyword {
+  color: #8be9fd;
+}
+
+.hljs-regex,
+.hljs-important {
+  color: #ffb86c;
+}
+
+.hljs-important,
+.hljs-bold {
+  font-weight: bold;
+}
+
+.hljs-italic {
+  font-style: italic;
+}
+
+.hljs-entity {
+  cursor: help;
 }
