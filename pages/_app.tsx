@@ -3,9 +3,9 @@ import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
 import { Inter } from "next/font/google";
 import { Provider } from "react-redux";
+import Layout from "@/components/Layout/Layout";
 import store from "../redux/store";
 import "@/styles/globals.css";
-import Layout from "@/components/Layout/Layout";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -14,7 +14,7 @@ export const inter = Inter({
 });
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: () => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -22,7 +22,8 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
+  const getLayout =
+    Component.getLayout || ((page: ReactElement) => <Layout>{page}</Layout>);
   return (
     <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
   );

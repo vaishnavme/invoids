@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../UI/Button";
-import { Input } from "../UI/Input";
 import { BaseDirectory } from "@tauri-apps/api/fs";
 import { useDispatch, useSelector } from "react-redux";
 import { appActions } from "@/redux/appSlice";
+import { Button } from "../UI/Button";
+import { Input } from "../UI/Input";
 
 type FilesConfig = {
   folder: string;
@@ -56,7 +56,7 @@ const Files = () => {
       await fs.createDir("", { dir: BaseDirectory.App, recursive: true });
       await fs.writeTextFile(
         "app.json",
-        JSON.stringify({ path: vaultPath, folder: folder }),
+        JSON.stringify({ path: vaultPath, folder }),
         {
           dir: BaseDirectory.App,
         },

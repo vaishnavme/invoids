@@ -19,6 +19,7 @@ type CommandTypes = {
 interface ISlashCommand {
   editor: Editor;
   range: Range;
+  // eslint-disable-next-line react/require-default-props
   query?: string;
 }
 
@@ -132,7 +133,7 @@ const suggestedCommands = [
 ];
 
 const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
-  const { editor, range, query } = props;
+  const { editor, range, query = "" } = props;
 
   const commandsRef = useRef([]);
 
@@ -148,7 +149,7 @@ const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
 
   const upHandler = () =>
     setSelectedIndex(
-      (selectedIndex + allCommands.length - 1) % allCommands.length
+      (selectedIndex + allCommands.length - 1) % allCommands.length,
     );
 
   const downHandler = () =>
@@ -179,14 +180,14 @@ const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
 
   const searchCommands = (searchQuery: string) => {
     const updatedCommandsList = allCommands.filter((option) =>
-      option.title.toLowerCase().includes(searchQuery)
+      option.title.toLowerCase().includes(searchQuery),
     );
     setAllCommands(updatedCommandsList);
   };
 
   const filterCommands = useCallback(
     debounce((searchQuery) => searchCommands(searchQuery), 100),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -195,49 +196,47 @@ const SlashCommandsList = forwardRef((props: ISlashCommand, ref) => {
 
   return (
     <div className="dark:bg-neutral-800 bg-white  dark:border-neutral-600 border w-64 max-h-80 overflow-y-auto rounded-lg p-1 shadow-lg">
-      <>
-        {allCommands?.length > 0 ? (
-          <div>
-            {allCommands.map((option, index) => {
-              if (selectedIndex === index) {
-                // @ts-ignore
-                commandsRef.current[selectedIndex]?.scrollIntoView({
-                  block: "nearest",
-                });
-              }
+      {allCommands?.length > 0 ? (
+        <div>
+          {allCommands.map((option, index) => {
+            if (selectedIndex === index) {
+              // @ts-ignore
+              commandsRef.current[selectedIndex]?.scrollIntoView({
+                block: "nearest",
+              });
+            }
 
-              return (
-                <button
-                  key={option.title}
-                  type="button"
-                  ref={(element) => {
-                    // @ts-ignore
-                    commandsRef.current[index] = element;
-                  }}
-                  onClick={() => option.command({ editor, range })}
-                  className={`dark:hover:bg-neutral-700 hover:bg-slate-100 w-full rounded ${
-                    selectedIndex === index
-                      ? "dark:bg-neutral-700 bg-slate-100"
-                      : ""
-                  }`}
-                >
-                  <div className="flex items-center px-3 py-2 gap-x-2">
-                    {option.icon}
-                    <div className="text-left">
-                      <p className="text-sm">{option.title}</p>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                        {option.description}
-                      </p>
-                    </div>
+            return (
+              <button
+                key={option.title}
+                type="button"
+                ref={(element) => {
+                  // @ts-ignore
+                  commandsRef.current[index] = element;
+                }}
+                onClick={() => option.command({ editor, range })}
+                className={`dark:hover:bg-neutral-700 hover:bg-slate-100 w-full rounded ${
+                  selectedIndex === index
+                    ? "dark:bg-neutral-700 bg-slate-100"
+                    : ""
+                }`}
+              >
+                <div className="flex items-center px-3 py-2 gap-x-2">
+                  {option.icon}
+                  <div className="text-left">
+                    <p className="text-sm">{option.title}</p>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      {option.description}
+                    </p>
                   </div>
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="px-3 py-2 text-sm">No Comand Found</div>
-        )}
-      </>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="px-3 py-2 text-sm">No Comand Found</div>
+      )}
     </div>
   );
 });

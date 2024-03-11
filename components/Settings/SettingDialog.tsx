@@ -1,4 +1,6 @@
 import { ReactNode, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { appActions } from "@/redux/appSlice";
 import { Button } from "../UI/Button";
 import {
   Dialog,
@@ -10,8 +12,6 @@ import {
 import General from "./General";
 import Files from "./Files";
 import Editor from "./Editor";
-import { useDispatch, useSelector } from "react-redux";
-import { appActions } from "@/redux/appSlice";
 
 interface ISettingProps {
   children: ReactNode;

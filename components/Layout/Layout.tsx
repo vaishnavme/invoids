@@ -5,8 +5,8 @@ import { BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
 import { Toaster, toast } from "sonner";
 import { inter } from "@/pages/_app";
 import { appActions } from "@/redux/appSlice";
-import { ThemeProvider } from "./ThemeProvider";
 import SideNavbar from "./SideNavbar";
+import ThemeProvider from "./ThemeProvider";
 
 interface ILayoutProps {
   children: ReactNode;

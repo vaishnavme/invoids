@@ -18,7 +18,7 @@ const Home = () => {
   const [docTitle, setDocTitle] = useState<string>("Untitled");
   const [docsBody, setDocBody] = useState<string>("");
 
-  useAutosizeTextArea(docTitleRef.current, docTitle);
+  useAutosizeTextArea(docTitleRef, docTitle);
 
   const loadExistingNote = async (fileName: string) => {
     const fs = await import("@tauri-apps/api/fs");

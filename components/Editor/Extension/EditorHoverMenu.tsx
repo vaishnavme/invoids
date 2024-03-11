@@ -19,31 +19,51 @@ const EditorHoverMenu = (props: IEditorHoverMenu) => {
       className="p-1 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-700 flex flex-row items-center gap-x-1 shadow"
     >
       <Toggle asChild size="sm" pressed={editor.isActive("bold")}>
-        <button onClick={() => editor.chain().focus().toggleBold().run()}>
+        <button
+          type="button"
+          aria-label="Bold"
+          onClick={() => editor.chain().focus().toggleBold().run()}
+        >
           <Icon.Bold size={18} />
         </button>
       </Toggle>
 
       <Toggle asChild size="sm" pressed={editor.isActive("italic")}>
-        <button onClick={() => editor.chain().focus().toggleItalic().run()}>
+        <button
+          type="button"
+          aria-label="Italic"
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+        >
           <Icon.Italic size={18} />
         </button>
       </Toggle>
 
       <Toggle asChild size="sm" pressed={editor.isActive("strike")}>
-        <button onClick={() => editor.chain().focus().toggleStrike().run()}>
+        <button
+          type="button"
+          aria-label="Strike Through"
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+        >
           <Icon.StrikeThrough size={18} />
         </button>
       </Toggle>
 
       <Toggle asChild size="sm" pressed={editor.isActive("underline")}>
-        <button onClick={() => editor.chain().focus().toggleUnderline().run()}>
+        <button
+          type="button"
+          aria-label="Underline"
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+        >
           <Icon.Underline size={18} />
         </button>
       </Toggle>
 
       <Toggle asChild size="sm" pressed={editor.isActive("code")}>
-        <button onClick={() => editor.chain().focus().toggleCode().run()}>
+        <button
+          type="button"
+          aria-label="Codeblock"
+          onClick={() => editor.chain().focus().toggleCode().run()}
+        >
           <Icon.Codeblock size={18} />
         </button>
       </Toggle>
