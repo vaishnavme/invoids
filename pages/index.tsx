@@ -6,6 +6,7 @@ import { Textarea } from "@/components/UI/Textarea";
 import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 import contentService from "@/lib/contentServices";
 import { toast } from "sonner";
+import { debounce } from "@/lib/utils";
 
 const Home = () => {
   const router = useRouter();
@@ -30,13 +31,16 @@ const Home = () => {
       const { frontMatter, body } = await contentService.getHTMLText(response);
 
       setDocTitle(frontMatter.title);
-      setDocBody(body);
+      docsBodyRef?.current?.setContent(body);
     } catch (err) {
       toast.error("Could not load note. Please try again later.");
     }
   };
 
-  const handleDocBodyUpdate = (textContent: string) => setDocBody(textContent);
+  const handleDocBodyUpdate = debounce(
+    (textContent: string) => setDocBody(textContent),
+    1200,
+  );
 
   useEffect(() => {
     const slug = (router?.query?.slug as string) || "";

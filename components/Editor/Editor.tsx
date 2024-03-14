@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  ForwardedRef,
-} from "react";
+import { forwardRef, useImperativeHandle, ForwardedRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import editorExtensions from "./Extension";
 import EditorHoverMenu from "./Extension/EditorHoverMenu";
@@ -39,15 +34,14 @@ const Editor = forwardRef((props: IEditorProps, ref: ForwardedRef<any>) => {
           editor.commands.clearContent();
         }
       },
+      setContent: (contentString: string) => {
+        if (editor) {
+          editor.commands.insertContent(contentString);
+        }
+      },
     }),
     [editor],
   );
-
-  useEffect(() => {
-    if (editor && editor.isEmpty && content !== "") {
-      editor.commands.insertContent(content);
-    }
-  }, [editor, content]);
 
   return (
     <>
