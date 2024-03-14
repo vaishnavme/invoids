@@ -7,6 +7,7 @@ import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 import contentService from "@/lib/contentServices";
 import { toast } from "sonner";
 import { debounce } from "@/lib/utils";
+import tauriService from "@/lib/tauri.services";
 
 const Home = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const Home = () => {
   useAutosizeTextArea(docTitleRef, docTitle);
 
   const loadExistingNote = async (fileName: string) => {
-    const fs = await import("@tauri-apps/api/fs");
+    const fs = await tauriService.getFS();
 
     const filePath = `${appConfig.path}/${fileName}.md`;
 
@@ -37,8 +38,33 @@ const Home = () => {
     }
   };
 
+  const autoSaveDocs = async (textContent: string) => {
+    const fs = await tauriService.getFS();
+
+    const timeData = Date.now();
+    const metaData = {
+      title: docTitle,
+      createdAt: timeData,
+      updatedAt: timeData,
+    };
+    const markdownString = await contentService.getMarkdownString({
+      body: textContent,
+      metaData,
+    });
+
+    const fileName = router?.query?.slug || "Untitled";
+
+    const fileToUpdate = `${appConfig.path}/${fileName}.md`;
+    setDocBody(textContent);
+    try {
+      await fs.writeTextFile(fileToUpdate, markdownString);
+    } catch (err) {
+      console.log("ERROR: ", err);
+    }
+  };
+
   const handleDocBodyUpdate = debounce(
-    (textContent: string) => setDocBody(textContent),
+    (textContent: string) => autoSaveDocs(textContent),
     1200,
   );
 

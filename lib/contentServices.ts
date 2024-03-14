@@ -31,11 +31,7 @@ const getMarkdownString = async ({ body, metaData }: GetMarkDownString) => {
     .map((key) => `${key}: ${metaData[key]}`)
     .join("\n");
 
-  const markdownString = `---
-  ${frontMatterString}
-  ---
-  ${body}
-  `;
+  const markdownString = `---\n${frontMatterString}\n---\n\n${body}`;
 
   return markdownString;
 };

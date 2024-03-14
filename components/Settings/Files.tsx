@@ -3,6 +3,8 @@ import { toast } from "sonner";
 import { BaseDirectory } from "@tauri-apps/api/fs";
 import { useDispatch, useSelector } from "react-redux";
 import { appActions } from "@/redux/appSlice";
+import tauriService from "@/lib/tauri.services";
+import { APP_CONFIG } from "@/lib/constant";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
 
@@ -22,7 +24,7 @@ const Files = () => {
   });
 
   const selectFolderPath = async () => {
-    const dialog = await import("@tauri-apps/api/dialog");
+    const dialog = await tauriService.getDialog();
 
     try {
       const result = await dialog.open({
@@ -36,13 +38,13 @@ const Files = () => {
         ...prevState,
         path: result as string,
       }));
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong!");
+    } catch (err) {
+      toast.error("Something went wrong!");
     }
   };
 
   const saveSettings = async () => {
-    const fs = await import("@tauri-apps/api/fs");
+    const fs = await tauriService.getFS();
 
     const { folder, path } = filesConfig;
 
@@ -55,7 +57,7 @@ const Files = () => {
 
       await fs.createDir("", { dir: BaseDirectory.App, recursive: true });
       await fs.writeTextFile(
-        "app.json",
+        APP_CONFIG,
         JSON.stringify({ path: vaultPath, folder }),
         {
           dir: BaseDirectory.App,
@@ -66,9 +68,8 @@ const Files = () => {
         folder,
       };
       dispatch(appActions.updateAppConfig(payload));
-    } catch (err: any) {
-      console.log(err);
-      toast.error(err?.message || "Something went wrong!");
+    } catch (err) {
+      toast.error("Something went wrong!");
     }
   };
 

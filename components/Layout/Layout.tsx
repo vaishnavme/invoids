@@ -5,6 +5,8 @@ import { BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
 import { Toaster, toast } from "sonner";
 import { inter } from "@/pages/_app";
 import { appActions } from "@/redux/appSlice";
+import { APP_CONFIG } from "@/lib/constant";
+import tauriService from "@/lib/tauri.services";
 import SideNavbar from "./SideNavbar";
 import ThemeProvider from "./ThemeProvider";
 
@@ -24,15 +26,14 @@ const Layout = (props: ILayoutProps) => {
   const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(false);
 
   const initalizeApp = async () => {
-    const fs = await import("@tauri-apps/api/fs");
+    const fs = await tauriService.getFS();
 
     try {
-      const result = await fs.readTextFile("app.json", {
+      const result = await fs.readTextFile(APP_CONFIG, {
         dir: BaseDirectory.App,
       });
 
       const settingsConfig = JSON.parse(result);
-
       dispatch(appActions.init(settingsConfig));
     } catch {
       dispatch(appActions.toggleSettingsDialog(true));
@@ -40,11 +41,14 @@ const Layout = (props: ILayoutProps) => {
   };
 
   const loadFileContent = async () => {
-    const fs = await import("@tauri-apps/api/fs");
+    const fs = await tauriService.getFS();
+
     try {
       const response = await fs.readDir(appConfig.path);
 
-      const files = response?.filter((file) => !file?.name?.startsWith("."));
+      const files = response?.filter(
+        (file: { name: string }) => !file?.name?.startsWith("."),
+      );
 
       setAllNotes(files);
     } catch (err) {
