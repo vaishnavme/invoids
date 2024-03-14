@@ -52,13 +52,7 @@
     "object-curly-spacing": ["warn", "always"],
     "key-spacing": ["warn", { "beforeColon": false }],
     "semi": "warn",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never",
-        "tsx": "never"
-      }
-    ]
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }
