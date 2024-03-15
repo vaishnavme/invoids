@@ -1,9 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { toast } from "sonner";
-import tauriService from "@/lib/tauri.services";
-import { NEW_NOTE_NAME } from "@/lib/constant";
 import { Button } from "../UI/Button";
 import ToggleTheme from "./ToggleTheme";
 import Icon from "../UI/Icons";
@@ -18,26 +14,12 @@ const SideNavbar = (props: ISideNavbarProps) => {
   const { isSidePanelOpen, setIsSidePanelOpen } = props;
 
   const router = useRouter();
-  const { appConfig } = useSelector((state) => state.AppData);
-
-  const createNewNote = async () => {
-    const fs = await tauriService.getFS();
-
-    try {
-      const filePath = `${appConfig.path}/${NEW_NOTE_NAME}.md`;
-      await fs.writeTextFile(filePath, "");
-
-      router.push("");
-    } catch (err) {
-      toast.error("Could not Create New Note.");
-    }
-  };
 
   const navbarItems = [
     {
       label: "Create New",
       icon: <Icon.PencilPlus strokeWidth={1.5} size={20} />,
-      onClick: () => createNewNote(),
+      onClick: () => router.push("/"),
     },
     {
       label: "Folder",
