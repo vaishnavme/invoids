@@ -3,6 +3,7 @@ import matter from "gray-matter";
 
 type FrontMatter = {
   title: string;
+  slug: string;
   createdAt: number;
   updatedAt: number;
   [key: string]: string | number;
@@ -31,7 +32,9 @@ const getMarkdownString = async ({ body, metaData }: GetMarkDownString) => {
     .map((key) => `${key}: ${metaData[key]}`)
     .join("\n");
 
-  const markdownString = `---\n${frontMatterString}\n---\n\n${body}`;
+  const markdown = text.makeMarkdown(body);
+
+  const markdownString = `---\n${frontMatterString}\n---\n\n${markdown}`;
 
   return markdownString;
 };
