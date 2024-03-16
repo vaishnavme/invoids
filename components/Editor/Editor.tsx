@@ -4,17 +4,15 @@ import editorExtensions from "./Extension";
 import EditorHoverMenu from "./Extension/EditorHoverMenu";
 
 type IEditorProps = {
-  content: string;
   // eslint-disable-next-line no-unused-vars
   onUpdate: (data: string) => void;
 };
 
 const Editor = forwardRef((props: IEditorProps, ref: ForwardedRef<any>) => {
-  const { onUpdate, content } = props;
+  const { onUpdate } = props;
 
   const editor = useEditor({
     extensions: editorExtensions,
-    content,
     onUpdate: ({ editor: editorInstance }) => {
       const html = editorInstance.getHTML();
       onUpdate(html);
@@ -36,7 +34,7 @@ const Editor = forwardRef((props: IEditorProps, ref: ForwardedRef<any>) => {
       },
       setContent: (contentString: string) => {
         if (editor) {
-          editor.commands.insertContent(contentString);
+          editor.commands.setContent(contentString);
         }
       },
     }),
