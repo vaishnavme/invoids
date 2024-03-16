@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { appActions } from "@/redux/appSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Button } from "../UI/Button";
 import {
   Dialog,
@@ -26,8 +26,8 @@ const settingsOption = [general, files, editor];
 const SettingsDialog = (props: ISettingProps) => {
   const { children } = props;
 
-  const dispatch = useDispatch();
-  const { showSettingDialog } = useSelector((state) => state.AppData);
+  const dispatch = useAppDispatch();
+  const { showSettingDialog } = useAppSelector((state) => state.AppData);
 
   const [selectedOption, setSelectedOption] = useState<string>(general);
 

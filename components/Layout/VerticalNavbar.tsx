@@ -5,12 +5,12 @@ import ToggleTheme from "./ToggleTheme";
 import Icon from "../UI/Icons";
 import SettingsDialog from "../Settings/SettingDialog";
 
-interface ISideNavbarProps {
+interface IVerticalNavbarProps {
   isSidePanelOpen: boolean;
   setIsSidePanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideNavbar = (props: ISideNavbarProps) => {
+const VerticalNavbar = (props: IVerticalNavbarProps) => {
   const { isSidePanelOpen, setIsSidePanelOpen } = props;
 
   const router = useRouter();
@@ -89,4 +89,4 @@ const SideNavbar = (props: ISideNavbarProps) => {
   );
 };
 
-export default SideNavbar;
+export default VerticalNavbar;

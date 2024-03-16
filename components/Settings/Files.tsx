@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { BaseDirectory } from "@tauri-apps/api/fs";
-import { useDispatch, useSelector } from "react-redux";
 import { appActions } from "@/redux/appSlice";
 import tauriService from "@/lib/tauri.services";
 import { APP_CONFIG } from "@/lib/constant";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
 
@@ -14,9 +14,9 @@ type FilesConfig = {
 };
 
 const Files = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { appConfig } = useSelector((state) => state.AppData);
+  const { appConfig } = useAppSelector((state) => state.AppData);
 
   const [filesConfig, setFilesConfig] = useState<FilesConfig>({
     folder: "",
