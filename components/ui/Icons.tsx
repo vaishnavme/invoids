@@ -26,6 +26,7 @@ import {
   IconItalic,
   IconStrikethrough,
   IconUnderline,
+  IconNotebook,
 } from "@tabler/icons-react";
 
 const Icon = {
@@ -56,6 +57,7 @@ const Icon = {
   Italic: IconItalic,
   StrikeThrough: IconStrikethrough,
   Underline: IconUnderline,
+  Notebook: IconNotebook,
 };
 
 export default Icon;

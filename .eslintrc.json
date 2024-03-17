@@ -1,12 +1,15 @@
 {
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "next/core-web-vitals",
     "plugin:react/recommended",
     "airbnb",
     "plugin:@next/next/recommended",
-    "prettier"
+    "prettier",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["react"],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "no-tabs": "off",
     "indent": "off",
@@ -52,10 +55,15 @@
     "object-curly-spacing": ["warn", "always"],
     "key-spacing": ["warn", { "beforeColon": false }],
     "semi": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",
       {
+        "js": "never",
+        "jsx": "never",
         "ts": "never",
         "tsx": "never"
       }

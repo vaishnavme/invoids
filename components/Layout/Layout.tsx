@@ -1,12 +1,14 @@
 import { ReactNode, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { BaseDirectory, FileEntry } from "@tauri-apps/api/fs";
-import { Toaster, toast } from "sonner";
+import { BaseDirectory } from "@tauri-apps/api/fs";
+import { Toaster } from "sonner";
 import { inter } from "@/pages/_app";
 import { appActions } from "@/redux/appSlice";
-import SideNavbar from "./SideNavbar";
+import { APP_CONFIG } from "@/lib/constant";
+import tauriService from "@/lib/tauri.services";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import VerticalNavbar from "./VerticalNavbar";
 import ThemeProvider from "./ThemeProvider";
+import SidePanel from "./SidePanel";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -15,48 +17,29 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   const { children } = props;
 
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const { appConfig } = useSelector((state) => state.AppData);
-
-  const [allNotes, setAllNotes] = useState<FileEntry[]>([]);
+  const { appConfig } = useAppSelector((state) => state.AppData);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(false);
 
   const initalizeApp = async () => {
-    const fs = await import("@tauri-apps/api/fs");
-
     try {
-      const result = await fs.readTextFile("app.json", {
+      const fs = await tauriService.getFS();
+
+      const result = await fs.readTextFile(APP_CONFIG, {
         dir: BaseDirectory.App,
       });
 
       const settingsConfig = JSON.parse(result);
-
       dispatch(appActions.init(settingsConfig));
     } catch {
       dispatch(appActions.toggleSettingsDialog(true));
     }
   };
 
-  const loadFileContent = async () => {
-    const fs = await import("@tauri-apps/api/fs");
-    try {
-      const response = await fs.readDir(appConfig.path);
-
-      const files = response?.filter((file) => !file?.name?.startsWith("."));
-
-      setAllNotes(files);
-    } catch (err) {
-      toast.error(`Could load existing notes from vault: ${appConfig.name}`);
-    }
-  };
-
   useEffect(() => {
     if (appConfig === null) {
       initalizeApp();
-    } else {
-      loadFileContent();
     }
   }, [appConfig]);
 
@@ -69,7 +52,7 @@ const Layout = (props: ILayoutProps) => {
     >
       <div className={`${inter.variable} flex flex-row relative`}>
         <div className="fixed left-0 top-0 z-30">
-          <SideNavbar
+          <VerticalNavbar
             isSidePanelOpen={isSidePanelOpen}
             setIsSidePanelOpen={setIsSidePanelOpen}
           />
@@ -78,28 +61,7 @@ const Layout = (props: ILayoutProps) => {
         <div className="w-full relative ml-11">
           <div className="h-8 border-b border-neutral-200 dark:border-neutral-700" />
           <main className="w-full flex flex-row h-[calc(100vh-32px)]">
-            <div
-              className={`bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700 border-neutral-200 shrink-0 transition-all ease-in-out flex flex-col items-center duration-300 ${
-                isSidePanelOpen
-                  ? "border-r translate-x-0 w-64"
-                  : "w-0 border-transparent -translate-x-64 z-0"
-              }`}
-            >
-              {allNotes.map((note) => (
-                <button
-                  type="button"
-                  key={note.name}
-                  className="px-2 py-1 rounded"
-                  onClick={() => {
-                    if (note.name) {
-                      router.push(`?slug=${note.name.replace(".md", "")}`);
-                    }
-                  }}
-                >
-                  <p className="truncate text-xs">{note.name}</p>
-                </button>
-              ))}
-            </div>
+            <SidePanel isSidePanelOpen={isSidePanelOpen} />
             <div className="w-full overflow-y-auto">{children}</div>
           </main>
         </div>

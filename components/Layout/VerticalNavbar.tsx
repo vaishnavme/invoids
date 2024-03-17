@@ -5,12 +5,12 @@ import ToggleTheme from "./ToggleTheme";
 import Icon from "../UI/Icons";
 import SettingsDialog from "../Settings/SettingDialog";
 
-interface ISideNavbarProps {
+interface IVerticalNavbarProps {
   isSidePanelOpen: boolean;
   setIsSidePanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideNavbar = (props: ISideNavbarProps) => {
+const VerticalNavbar = (props: IVerticalNavbarProps) => {
   const { isSidePanelOpen, setIsSidePanelOpen } = props;
 
   const router = useRouter();
@@ -19,7 +19,7 @@ const SideNavbar = (props: ISideNavbarProps) => {
     {
       label: "Create New",
       icon: <Icon.PencilPlus strokeWidth={1.5} size={20} />,
-      onClick: () => router.push(""),
+      onClick: () => router.push("/"),
     },
     {
       label: "Folder",
@@ -89,4 +89,4 @@ const SideNavbar = (props: ISideNavbarProps) => {
   );
 };
 
-export default SideNavbar;
+export default VerticalNavbar;
