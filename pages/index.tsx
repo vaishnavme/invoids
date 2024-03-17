@@ -1,105 +1,139 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Editor from "@/components/Editor/Editor";
+import { useState, useRef, useEffect } from "react";
+import { toast } from "sonner";
+import { debounce, getFilePath, getSlug } from "@/lib/utils";
+import { appActions, getAppConfig } from "@/redux/appSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Textarea } from "@/components/UI/Textarea";
 import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 import contentService from "@/lib/contentServices";
-import { toast } from "sonner";
-import { debounce } from "@/lib/utils";
 import tauriService from "@/lib/tauri.services";
+import DocsOverview from "@/components/Documents/DocsOverview";
+import Editor from "@/components/Editor/Editor";
+import { FrontMatter } from "@/lib/types/content.service.types";
 
 const Home = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const { appConfig } = useSelector((state) => state.AppData);
+  const appConfig = useAppSelector(getAppConfig);
 
-  const docTitleRef = useRef(null);
-  const docsBodyRef = useRef(null);
+  const titleAreaRef = useRef(null);
+  const contentAreaRef = useRef(null);
 
-  const [docTitle, setDocTitle] = useState<string>("Untitled");
-  const [docsBody, setDocBody] = useState<string>("");
+  const [frontMatter, setFrontmatter] = useState<FrontMatter>();
+  const [content, setContent] = useState<string>("");
 
-  useAutosizeTextArea(docTitleRef, docTitle);
+  useAutosizeTextArea(titleAreaRef, frontMatter?.title || "");
 
-  const loadExistingNote = async (fileName: string) => {
-    const fs = await tauriService.getFS();
-
-    const filePath = `${appConfig.path}/${fileName}.md`;
-
+  const loadExistingDocs = async (slug: string) => {
     try {
-      const response = await fs.readTextFile(filePath);
-      const { frontMatter, body } = await contentService.getHTMLText(response);
+      const fs = await tauriService.getFS();
 
-      setDocTitle(frontMatter.title);
-      docsBodyRef?.current?.setContent(body);
+      const docsPath = getFilePath({
+        basePath: appConfig.path,
+        fileName: slug,
+      });
+
+      const response = await fs.readTextFile(docsPath);
+      const { frontMatter: frontMatterData, body } =
+        await contentService.getHTMLText(response);
+
+      setFrontmatter(frontMatterData);
+      setContent(body);
+      contentAreaRef?.current?.setContent(body);
     } catch (err) {
       toast.error("Could not load note. Please try again later.");
     }
   };
 
-  const autoSaveDocs = async (textContent: string) => {
-    const fs = await tauriService.getFS();
+  const autoSaveDocs = async (contentString: string) => {
+    let file = null;
+    let isNewFile = false;
 
-    const timeData = Date.now();
-    const metaData = {
-      title: docTitle,
-      createdAt: timeData,
-      updatedAt: timeData,
-    };
-    const markdownString = await contentService.getMarkdownString({
-      body: textContent,
-      metaData,
+    if (router?.query?.slug) {
+      file = router.query.slug as string;
+    } else {
+      isNewFile = true;
+      file = frontMatter?.title;
+    }
+
+    if (!file) return null;
+
+    const fileSlug = isNewFile ? getSlug(file) : file;
+    const filePath = getFilePath({
+      basePath: appConfig.path,
+      fileName: fileSlug,
     });
 
-    const fileName = router?.query?.slug || "Untitled";
-
-    const fileToUpdate = `${appConfig.path}/${fileName}.md`;
-    setDocBody(textContent);
     try {
-      await fs.writeTextFile(fileToUpdate, markdownString);
+      const fs = await tauriService.getFS();
+      const markdownString = await contentService.getMarkdownString({
+        body: contentString,
+        metaData: frontMatter,
+      });
+
+      setContent(contentString);
+
+      await fs.writeTextFile(filePath, markdownString);
+
+      if (isNewFile) {
+        dispatch(
+          appActions.addNewFile({ name: `${fileSlug}.md`, path: filePath })
+        );
+        router.replace(`?slug=${fileSlug}`);
+      }
     } catch (err) {
-      console.log("ERROR: ", err);
+      toast.error("Could not auto save.");
     }
   };
 
-  const handleDocBodyUpdate = debounce(
+  const handleContentString = debounce(
     (textContent: string) => autoSaveDocs(textContent),
-    1200,
+    1200
   );
 
   useEffect(() => {
-    const slug = (router?.query?.slug as string) || "";
+    const slug = router?.query?.slug || "";
+
     if (slug) {
-      loadExistingNote(slug);
-    } else {
-      setDocTitle("Untitled");
-      setDocBody("");
-      docsBodyRef?.current?.clearContent();
+      loadExistingDocs(slug as string);
+      return;
     }
+
+    setFrontmatter(undefined);
+    setContent("");
+    contentAreaRef?.current?.clearContent("body");
   }, [router]);
 
   return (
     <div className="max-w-3xl w-full mx-auto p-6">
-      <div className="w-full mb-4 ">
-        <p className="text-sm font-medium text-center">{docTitle}</p>
-      </div>
       <Textarea
-        ref={docTitleRef}
+        ref={titleAreaRef}
         autoFocus
-        value={docTitle}
-        placeholder="Untitled"
         maxLength={180}
-        onChange={(e) => setDocTitle(e.target.value)}
+        placeholder="Untitled"
+        value={frontMatter?.title || ""}
+        onBlur={() => {
+          autoSaveDocs(content);
+        }}
         className="text-3xl font-semibold w-full mb-4 h-0 outline-none border-none dark:border-none resize-none focus-visible:ring-transparent dark:focus-visible:ring-transparent shadow-none"
+        onChange={(e) => {
+          setFrontmatter((prevState) => ({
+            ...prevState,
+            title: e.target.value,
+          }));
+        }}
       />
-      <div className="mb-64 px-4">
+
+      <div id="editor" className="mb-64 px-4">
         <Editor
-          ref={docsBodyRef}
-          content={docsBody}
-          onUpdate={(data) => handleDocBodyUpdate(data)}
+          ref={contentAreaRef}
+          onUpdate={(contentString) => handleContentString(contentString)}
         />
       </div>
+
+      {frontMatter?.title ? <DocsOverview frontMatter={frontMatter} /> : null}
     </div>
   );
 };

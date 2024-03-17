@@ -52,7 +52,7 @@ const appSlice = createSlice({
 });
 
 export const { selectAll: getAllFiles } = appAdapter.getSelectors(
-  (state: RootState) => state.AppData,
+  (state: RootState) => state.AppData
 );
 
 export const getAppConfig = (state: RootState) =>
