@@ -8,7 +8,6 @@ import { Textarea } from "@/components/UI/Textarea";
 import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 import contentService from "@/lib/contentServices";
 import tauriService from "@/lib/tauri.services";
-import DocsOverview from "@/components/Documents/DocsOverview";
 import Editor from "@/components/Editor/Editor";
 import { EditorRefMethods } from "@/lib/types/editor.types";
 import { FrontMatter } from "@/lib/types/content.types";
@@ -146,8 +145,6 @@ const Home = () => {
           onUpdate={(contentString) => handleContentString(contentString)}
         />
       </div>
-
-      {frontMatter?.title ? <DocsOverview frontMatter={frontMatter} /> : null}
     </div>
   );
 };
