@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import contentService from "@/lib/contentServices";
-import {
-  FrontMatter,
-  TableOfContentElement,
-} from "@/lib/types/content.service.types";
+import { FrontMatter, TableOfContentElement } from "@/lib/types/content.types";
 
 interface OverviewInfo {
   words: number;

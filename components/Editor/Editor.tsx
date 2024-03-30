@@ -1,14 +1,10 @@
 import { forwardRef, useImperativeHandle, ForwardedRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
+import { EditorProps } from "@/lib/types/editor.types";
 import editorExtensions from "./Extension";
 import EditorHoverMenu from "./Extension/EditorHoverMenu";
 
-type IEditorProps = {
-  // eslint-disable-next-line no-unused-vars
-  onUpdate: (data: string) => void;
-};
-
-const Editor = forwardRef((props: IEditorProps, ref: ForwardedRef<any>) => {
+const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<any>) => {
   const { onUpdate } = props;
 
   const editor = useEditor({

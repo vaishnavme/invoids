@@ -10,7 +10,12 @@ import contentService from "@/lib/contentServices";
 import tauriService from "@/lib/tauri.services";
 import DocsOverview from "@/components/Documents/DocsOverview";
 import Editor from "@/components/Editor/Editor";
-import { FrontMatter } from "@/lib/types/content.service.types";
+import { EditorRefMethods } from "@/lib/types/editor.types";
+import { FrontMatter } from "@/lib/types/content.types";
+
+const initialFrontmatterState = {
+  title: "",
+};
 
 const Home = () => {
   const router = useRouter();
@@ -19,9 +24,11 @@ const Home = () => {
   const appConfig = useAppSelector(getAppConfig);
 
   const titleAreaRef = useRef(null);
-  const contentAreaRef = useRef(null);
+  const contentAreaRef = useRef<EditorRefMethods>(null);
 
-  const [frontMatter, setFrontmatter] = useState<FrontMatter>();
+  const [frontMatter, setFrontmatter] = useState<FrontMatter>(
+    initialFrontmatterState,
+  );
   const [content, setContent] = useState<string>("");
 
   useAutosizeTextArea(titleAreaRef, frontMatter?.title || "");
@@ -79,7 +86,7 @@ const Home = () => {
 
       if (isNewFile) {
         dispatch(
-          appActions.addNewFile({ name: `${fileSlug}.md`, path: filePath })
+          appActions.addNewFile({ name: `${fileSlug}.md`, path: filePath }),
         );
         router.replace(`?slug=${fileSlug}`);
       }
@@ -89,8 +96,8 @@ const Home = () => {
   };
 
   const handleContentString = debounce(
-    (textContent: string) => autoSaveDocs(textContent),
-    1200
+    (textContent) => autoSaveDocs(textContent as string),
+    1200,
   );
 
   useEffect(() => {
@@ -101,9 +108,9 @@ const Home = () => {
       return;
     }
 
-    setFrontmatter(undefined);
+    setFrontmatter(initialFrontmatterState);
     setContent("");
-    contentAreaRef?.current?.clearContent("body");
+    contentAreaRef?.current?.clearContent();
   }, [router]);
 
   return (
