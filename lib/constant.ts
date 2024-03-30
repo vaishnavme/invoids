@@ -1,4 +1,4 @@
-import { Headings } from "./types/content.service.types";
+import { Headings } from "./types/content.types";
 
 export const APP_CONFIG: string = "app.json";
 export const NEW_NOTE_NAME: string = "Untitled";

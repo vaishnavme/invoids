@@ -1,15 +1,7 @@
 import Showdown from "showdown";
 import matter from "gray-matter";
 import { HEADINGS } from "./constant";
-import {
-  FrontMatter,
-  TableOfContentElement,
-} from "./types/content.service.types";
-
-type GetMarkDownString = {
-  body: string;
-  metaData: FrontMatter;
-};
+import { FrontMatter, TableOfContentElement } from "./types/content.types";
 
 const text = new Showdown.Converter();
 
@@ -19,14 +11,24 @@ const getHTMLText = async (textBuffer: string) => {
   const html = await text.makeHtml(content);
 
   return {
-    frontMatter: data,
+    frontMatter: {
+      title: data.title,
+      createdAt: data?.createdAt || null,
+      updatedAt: data?.updatedAt || null,
+    },
     body: html,
   };
 };
 
-const getMarkdownString = async ({ body, metaData }: GetMarkDownString) => {
+const getMarkdownString = async ({
+  body,
+  metaData,
+}: {
+  body: string;
+  metaData: FrontMatter;
+}) => {
   const frontMatterString = Object.keys(metaData)
-    .map((key) => `${key}: ${metaData[key]}`)
+    .map((key) => `${key}: ${metaData[key as keyof FrontMatter]}`)
     .join("\n");
 
   const markdown = text.makeMarkdown(body);
@@ -57,7 +59,7 @@ const getTableOfContentFromDOM = (domNode: HTMLElement) => {
   rawHeadingTags?.forEach((tag) => {
     const tagName = tag?.tagName;
     const tagInfo = HEADINGS[tagName as keyof typeof HEADINGS];
-    const element: TableOfContentElement = {
+    const element = {
       text: tag?.textContent || null,
       ...tagInfo,
     };
