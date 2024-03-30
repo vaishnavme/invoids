@@ -73,11 +73,17 @@ const Home = () => {
       fileName: fileSlug,
     });
 
+    const metaData = {
+      title: frontMatter.title,
+      createdAt: frontMatter?.createdAt || Date.now(),
+      updatedAt: Date.now(),
+    };
+
     try {
       const fs = await tauriService.getFS();
       const markdownString = await contentService.getMarkdownString({
         body: contentString,
-        metaData: frontMatter,
+        metaData,
       });
 
       setContent(contentString);
@@ -89,6 +95,7 @@ const Home = () => {
           appActions.addNewFile({ name: `${fileSlug}.md`, path: filePath }),
         );
         router.replace(`?slug=${fileSlug}`);
+        setFrontmatter(metaData);
       }
     } catch (err) {
       toast.error("Could not auto save.");
