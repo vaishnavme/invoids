@@ -21,21 +21,22 @@ const VerticalNavbar = (props: IVerticalNavbarProps) => {
       icon: <Icon.PencilPlus strokeWidth={1.5} size={20} />,
       onClick: () => router.push("/"),
     },
-    {
-      label: "Folder",
-      icon: <Icon.Folder strokeWidth={1.5} size={20} />,
-      onClick: () => {},
-    },
-    {
-      label: "Search",
-      icon: <Icon.Search strokeWidth={1.5} size={20} />,
-      onClick: () => {},
-    },
-    {
-      label: "Bookmarks",
-      icon: <Icon.Bookmarks strokeWidth={1.5} size={20} />,
-      onClick: () => {},
-    },
+    // @TODO: temporary hide unavailable paths
+    // {
+    //   label: "Folder",
+    //   icon: <Icon.Folder strokeWidth={1.5} size={20} />,
+    //   onClick: () => {},
+    // },
+    // {
+    //   label: "Search",
+    //   icon: <Icon.Search strokeWidth={1.5} size={20} />,
+    //   onClick: () => {},
+    // },
+    // {
+    //   label: "Bookmarks",
+    //   icon: <Icon.Bookmarks strokeWidth={1.5} size={20} />,
+    //   onClick: () => {},
+    // },
   ];
 
   return (
